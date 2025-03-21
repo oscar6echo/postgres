@@ -1,8 +1,11 @@
 {
-  "name": "@oscar6echo/postgres",
-  "version": "3.4.5-b",
+  "name": "@oscar6echo/postgres", // original = "@y0/postgres"
+  "version": "3.4.5-c",
   "exports": "./mod.js", // not "./src/index.js"
   "license": "MulanPSL-2.0",
+  "imports": {
+    "@types/node": "npm:@types/node@22.13.11"
+  },
   "exclude": [
     "deno.lock",
     "tests/",

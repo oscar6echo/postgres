@@ -2,6 +2,7 @@
   "version": "4",
   "specifiers": {
     "jsr:@std/crypto@*": "1.0.4",
+    "npm:@types/node@*": "22.12.0",
     "npm:@types/node@^22.13.11": "22.13.11"
   },
   "jsr": {
@@ -10,6 +11,12 @@
     }
   },
   "npm": {
+    "@types/node@22.12.0": {
+      "integrity": "sha512-Fll2FZ1riMjNmlmJOdAyY5pUbkftXslB5DgEzlIuNaiWhXd00FhWxVC/r4yV/4wBb9JfImTu+jiSvXTkJ7F/gA==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
     "@types/node@22.13.11": {
       "integrity": "sha512-iEUCUJoU0i3VnrCmgoWCXttklWcvoCIx4jzcP22fioIVSdTmjgoEvmAO/QPw6TcS9k5FrNgn4w7q5lGOd1CT5g==",
       "dependencies": [
@@ -172,12 +179,5 @@
     "https://deno.land/std@0.132.0/streams/conversion.ts": "712585bfa0172a97fb68dd46e784ae8ad59d11b88079d6a4ab098ff42e697d21",
     "https://deno.land/std@0.132.0/testing/_diff.ts": "9d849cd6877694152e01775b2d93f9d6b7aef7e24bfe3bfafc4d7a1ac8e9f392",
     "https://deno.land/std@0.132.0/testing/asserts.ts": "b0ef969032882b1f7eb1c7571e313214baa1485f7b61cf35807b2434e254365c"
-  },
-  "workspace": {
-    "packageJson": {
-      "dependencies": [
-        "npm:@types/node@^22.13.11"
-      ]
-    }
   }
 }
