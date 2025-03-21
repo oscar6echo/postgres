@@ -1,6 +1,18 @@
 {
   "name": "@oscar6echo/postgres",
-  "version": "3.4.5-a",
+  "version": "3.4.5-b",
   "exports": "./mod.js", // not "./src/index.js"
-  "license": "MulanPSL-2.0"
+  "license": "MulanPSL-2.0",
+  "exclude": [
+    "deno.lock",
+    "tests/",
+    ".git/",
+    ".github/",
+    ".vscode/",
+    "examples/",
+    "docs/",
+    "*.test.ts",
+    "*.test.js",
+    "benchmark/"
+  ]
 }
