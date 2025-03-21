@@ -1,6 +1,6 @@
-import { Buffer } from 'https://deno.land/std@0.132.0/node/buffer.ts'
-import { Query } from './query.js'
+import { Buffer } from 'node:buffer'
 import { Errors } from './errors.js'
+import { Query } from './query.js'
 
 export const types = {
   string: {

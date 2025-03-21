@@ -1,0 +1,6 @@
+{
+  "name": "@oscar6echo/postgres",
+  "version": "3.4.5-a",
+  "exports": "./mod.js", // not "./src/index.js"
+  "license": "MulanPSL-2.0"
+}

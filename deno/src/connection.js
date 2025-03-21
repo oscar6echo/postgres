@@ -1,18 +1,16 @@
-import { HmacSha256 } from 'https://deno.land/std@0.132.0/hash/sha256.ts'
-import { Buffer } from 'https://deno.land/std@0.132.0/node/buffer.ts'
-import { setImmediate, clearImmediate } from '../polyfills.js'
-import { net } from '../polyfills.js'
-import { tls } from '../polyfills.js'
-import crypto from 'https://deno.land/std@0.132.0/node/crypto.ts'
-import Stream from 'https://deno.land/std@0.132.0/node/stream.ts'
+import { HmacSha256 } from "jsr:@std/crypto@1";
+import { Buffer } from 'node:buffer';
+import crypto from 'node:crypto';
+import Stream from 'node:stream';
+import { clearImmediate, net, setImmediate, tls } from '../polyfills.js';
 
 
-import { stringify, handleValue, arrayParser, arraySerializer } from './types.js'
-import { Errors } from './errors.js'
-import Result from './result.js'
-import Queue from './queue.js'
-import { Query, CLOSE } from './query.js'
-import b from './bytes.js'
+import b from './bytes.js';
+import { Errors } from './errors.js';
+import { CLOSE, Query } from './query.js';
+import Queue from './queue.js';
+import Result from './result.js';
+import { arrayParser, arraySerializer, handleValue, stringify } from './types.js';
 
 export default Connection
 

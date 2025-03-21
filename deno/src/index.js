@@ -1,30 +1,30 @@
-import process from 'https://deno.land/std@0.132.0/node/process.ts'
-import os from 'https://deno.land/std@0.132.0/node/os.ts'
-import fs from 'https://deno.land/std@0.132.0/node/fs.ts'
+import fs from "node:fs";
+import os from 'node:os';
+import process from 'node:process';
 
 import {
-  mergeUserTypes,
-  inferType,
-  Parameter,
-  Identifier,
-  Builder,
-  toPascal,
-  pascal,
-  toCamel,
-  camel,
-  toKebab,
-  kebab,
-  fromPascal,
-  fromCamel,
-  fromKebab
-} from './types.js'
+    Builder,
+    camel,
+    fromCamel,
+    fromKebab,
+    fromPascal,
+    Identifier,
+    inferType,
+    kebab,
+    mergeUserTypes,
+    Parameter,
+    pascal,
+    toCamel,
+    toKebab,
+    toPascal
+} from './types.js';
 
-import Connection from './connection.js'
-import { Query, CLOSE } from './query.js'
-import Queue from './queue.js'
-import { Errors, PostgresError } from './errors.js'
-import Subscribe from './subscribe.js'
-import largeObject from './large.js'
+import Connection from './connection.js';
+import { Errors, PostgresError } from './errors.js';
+import largeObject from './large.js';
+import { CLOSE, Query } from './query.js';
+import Queue from './queue.js';
+import Subscribe from './subscribe.js';
 
 Object.assign(Postgres, {
   PostgresError,

@@ -1,3 +1,7 @@
+> **WARNING**:
+> This is a test to fix deno.jsonc `exports` field. Cf. this [issue](https://github.com/denoland/deno/issues/28551#issuecomment-2740019205).  
+> To be removed when original lib [@y0/postgres](https://jsr.io/@y0/postgres) is fixed
+
 <img align="left" width="440" height="180" alt="Fastest full PostgreSQL nodejs client" src="https://raw.githubusercontent.com/porsager/postgres/master/postgresjs.svg?sanitize=true">
 
 - [🚀 Fastest full-featured node & deno client](https://github.com/porsager/postgres-benchmarks#results)
@@ -15,9 +19,10 @@
 <img height="220" width="458" alt="Good UX with Postgres.js" src="https://raw.githubusercontent.com/porsager/postgres/master/demo.gif">
 <br>
 
-
 ### Usage
+
 Create your `sql` database instance
+
 ```js
 // db.js
 import postgres from 'https://deno.land/x/postgresjs/mod.js'
@@ -28,6 +33,7 @@ export default sql
 ```
 
 Simply import for use elsewhere
+
 ```js
 // users.js
 import sql from './db.js'
@@ -68,24 +74,23 @@ const { default: postgres } = await import('postgres')
 
 ## Table of Contents
 
-* [Connection](#connection)
-* [Queries](#queries)
-* [Building queries](#building-queries)
-* [Advanced query methods](#advanced-query-methods)
-* [Transactions](#transactions)
-* [Data Transformation](#data-transformation)
-* [Listen & notify](#listen--notify)
-* [Realtime subscribe](#realtime-subscribe)
-* [Numbers, bigint, numeric](#numbers-bigint-numeric)
-* [Result Array](#result-array)
-* [Connection details](#connection-details)
-* [Custom Types](#custom-types)
-* [Teardown / Cleanup](#teardown--cleanup)
-* [Error handling](#error-handling)
-* [TypeScript support](#typescript-support)
-* [Reserving connections](#reserving-connections)
-* [Changelog](./CHANGELOG.md)
-
+- [Connection](#connection)
+- [Queries](#queries)
+- [Building queries](#building-queries)
+- [Advanced query methods](#advanced-query-methods)
+- [Transactions](#transactions)
+- [Data Transformation](#data-transformation)
+- [Listen & notify](#listen--notify)
+- [Realtime subscribe](#realtime-subscribe)
+- [Numbers, bigint, numeric](#numbers-bigint-numeric)
+- [Result Array](#result-array)
+- [Connection details](#connection-details)
+- [Custom Types](#custom-types)
+- [Teardown / Cleanup](#teardown--cleanup)
+- [Error handling](#error-handling)
+- [TypeScript support](#typescript-support)
+- [Reserving connections](#reserving-connections)
+- [Changelog](./CHANGELOG.md)
 
 ## Connection
 
@@ -202,6 +207,7 @@ await sql`
 **You can omit column names and simply execute `sql(user)` to get all the fields from the object as columns**. Be careful not to allow users to supply columns that you do not want to be inserted.
 
 #### Multiple inserts in one query
+
 If you need to insert multiple rows at the same time it's also much faster to do it with a single `insert`. Simply pass an array of objects to `sql()`.
 
 ```js
@@ -228,7 +234,9 @@ insert into users ("name", "age") values ($1, $2), ($3, $4)
 ```
 
 ### Dynamic columns in updates
+
 This is also useful for update queries
+
 ```js
 const user = {
   id: 1,
@@ -258,7 +266,9 @@ await sql`
 ```
 
 ### Multiple updates in one query
+
 To create multiple updates in a single query, it is necessary to use arrays instead of objects to ensure that the order of the items correspond with the column names.
+
 ```js
 const users = [
   [1, 'John', 34],
@@ -274,7 +284,9 @@ await sql`
 ```
 
 ### Dynamic values and `where in`
+
 Value lists can also be created dynamically, making `where in` queries simple too.
+
 ```js
 const users = await sql`
   select
@@ -285,6 +297,7 @@ const users = await sql`
 ```
 
 or
+
 ```js
 const [{ a, b, c }] = await sql`
   select
@@ -299,6 +312,7 @@ Postgres.js features a simple dynamic query builder by conditionally appending/o
 It works by nesting ` sql`` ` fragments within other ` sql`` ` calls or fragments. This allows you to build dynamic queries safely without risking sql injections through usual string concatenation.
 
 ### Partial queries
+
 ```js
 const olderThan = x => sql`and age > ${ x }`
 
@@ -321,6 +335,7 @@ select * from users where name is not null and age > 50
 ```
 
 ### Dynamic filters
+
 ```js
 await sql`
   select
@@ -339,7 +354,9 @@ select * from users where user_id = $1
 ```
 
 ### SQL functions
+
 Using keywords or calling functions dynamically is also possible by using ``` sql`` ``` fragments.
+
 ```js
 const date = null
 
@@ -352,7 +369,9 @@ update users set updated_at = now()
 ```
 
 ### Table names
+
 Dynamic identifiers like table names and column names is also supported like so:
+
 ```js
 const table = 'users'
     , column = 'id'
@@ -385,6 +404,7 @@ Here's a quick oversight over all the ways to do interpolation in a query templa
 Use cursors if you need to throttle the amount of rows being returned from a query. You can use a cursor either as an [async iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of) or with a callback function. For a callback function new results won't be requested until the promise / async callback function has resolved.
 
 ##### callback function
+
 ```js
 await sql`
   select
@@ -397,6 +417,7 @@ await sql`
 ```
 
 ##### for await...of
+
 ```js
 // for await...of
 const cursor = sql`select * from generate_series(1,4) as x`.cursor()
@@ -408,6 +429,7 @@ for await (const [row] of cursor) {
 ```
 
 A single row will be returned by default, but you can also request batches by setting the number of rows desired in each batch as the first argument to `.cursor`:
+
 ```js
 await sql`
   select
@@ -438,6 +460,7 @@ await sql`
 #### ```await sql``.forEach(fn)```
 
 If you want to handle rows returned by a query one by one, you can use `.forEach` which returns a promise that resolves once there are no more rows.
+
 ```js
 await sql`
   select created_at, name from events
@@ -449,6 +472,7 @@ await sql`
 ```
 
 ### Query Descriptions
+
 #### ```await sql``.describe() -> Result[]```
 
 Rather than executing a given query, `.describe` will return information utilized in the query process. This information can include the query identifier, column types, etc.
@@ -456,6 +480,7 @@ Rather than executing a given query, `.describe` will return information utilize
 This is useful for debugging and analyzing your Postgres queries. Furthermore, **`.describe` will give you access to the final generated query string that would be executed.**
 
 ### Rows as Array of Values
+
 #### ```sql``.values()```
 
 Using `.values` will return rows as an array of values for each column, instead of objects.
@@ -463,6 +488,7 @@ Using `.values` will return rows as an array of values for each column, instead 
 This can be useful to receive identically named columns, or for specific performance/transformation reasons. The column definitions are still included on the result array, plus access to parsers for each column.
 
 ### Rows as Raw Array of Buffers
+
 #### ```sql``.raw()```
 
 Using `.raw` will return rows as an array with `Buffer` values for each column, instead of objects.
@@ -470,6 +496,7 @@ Using `.raw` will return rows as an array with `Buffer` values for each column, 
 This can be useful for specific performance/transformation reasons. The column definitions are still included on the result array, plus access to parsers for each column.
 
 ### Queries in Files
+
 #### `await sql.file(path, [args], [options]) -> Result[]`
 
 Using a file for a query is also supported with optional parameters to use if the file includes `$1, $2, etc`
@@ -479,6 +506,7 @@ const result = await sql.file('query.sql', ['Murray', 68])
 ```
 
 ### Multiple statements in one query
+
 #### ```await sql``.simple()```
 
 The postgres wire protocol supports ["simple"](https://www.postgresql.org/docs/current/protocol-flow.html#id-1.10.6.7.4) and ["extended"](https://www.postgresql.org/docs/current/protocol-flow.html#PROTOCOL-FLOW-EXT-QUERY) queries. "simple" queries supports multiple statements, but does not support any dynamic parameters. "extended" queries support parameters but only one statement. To use "simple" queries you can use
@@ -510,6 +538,7 @@ await pipeline(userStream, query);
 #### ```await sql`copy ... to stdout`.readable() -> Readable```
 
 ##### Using Stream Pipeline
+
 ```js
 import { pipeline } from 'node:stream/promises'
 import { createWriteStream } from 'node:fs'
@@ -520,6 +549,7 @@ await pipeline(readableStream, createWriteStream('output.tsv'))
 ```
 
 ##### Using `for await...of`
+
 ```js
 const readableStream = await sql`
   copy (
@@ -665,7 +695,6 @@ sql.begin('read write', async sql => {
 })
 ```
 
-
 #### PREPARE TRANSACTION `await sql.prepare([name]) -> fn()`
 
 Indicates that the transactions should be prepared using the [`PREPARE TRANSACTION [NAME]`](https://www.postgresql.org/docs/current/sql-prepare-transaction.html) statement
@@ -691,9 +720,9 @@ Postgres.js allows for transformation of the data passed to or returned from a q
 
 Built in transformation functions are:
 
-* For camelCase - `postgres.camel`, `postgres.toCamel`, `postgres.fromCamel`
-* For PascalCase - `postgres.pascal`, `postgres.toPascal`, `postgres.fromPascal`
-* For Kebab-Case - `postgres.kebab`, `postgres.toKebab`, `postgres.fromKebab`
+- For camelCase - `postgres.camel`, `postgres.toCamel`, `postgres.fromCamel`
+- For PascalCase - `postgres.pascal`, `postgres.toPascal`, `postgres.fromPascal`
+- For Kebab-Case - `postgres.kebab`, `postgres.toKebab`, `postgres.fromKebab`
 
 These built in transformations will only convert to/from snake_case. For example, using `{ transform: postgres.toCamel }` will convert the column names to camelCase only if the column names are in snake_case to begin with. `{ transform: postgres.fromCamel }` will convert camelCase only to snake_case.
 
@@ -779,8 +808,8 @@ console.log(data) // [ { aTest: null } ]
 
 To specify your own transformation functions, you can use the `column`, `value` and `row` options inside of `transform`, each an object possibly including `to` and `from` keys:
 
-* `to`: The function to transform the outgoing query column name to, i.e `SELECT ${ sql('aName') }` to `SELECT a_name` when using `postgres.toCamel`.
-* `from`: The function to transform the incoming query result column name to, see example below.
+- `to`: The function to transform the outgoing query column name to, i.e `SELECT ${ sql('aName') }` to `SELECT a_name` when using `postgres.toCamel`.
+- `from`: The function to transform the incoming query result column name to, see example below.
 
 > Both parameters are optional, if not provided, the default transformation function will be used.
 
@@ -808,6 +837,7 @@ const sql = postgres({
 When you call `.listen`, a dedicated connection will be created to ensure that you receive notifications instantly. This connection will be used for any further calls to `.listen`. The connection will automatically reconnect according to a backoff reconnection pattern to not overload the database server.
 
 ### Listen `await sql.listen(channel, onnotify, [onlisten]) -> { state }`
+
 `.listen` takes the channel name, a function to handle each notify, and an optional function to run every time listen is registered and ready (happens on initial connect and reconnects). It returns a promise which resolves once the `LISTEN` query to Postgres completes, or if there is already a listener active.
 
 ```js
@@ -830,8 +860,11 @@ function run(job) {
   // And here you do the work you please
 }
 ```
+
 ### Notify `await sql.notify(channel, payload) -> Result[]`
+
 Notify can be done as usual in SQL, or by using the `sql.notify` method.
+
 ```js
 sql.notify('news', JSON.stringify({ no: 'this', is: 'news' }))
 ```
@@ -845,11 +878,13 @@ Postgres.js implements the logical replication protocol of PostgreSQL to support
 ### Quick start
 
 #### Create a publication (eg. in migration)
+
 ```sql
 CREATE PUBLICATION alltables FOR ALL TABLES
 ```
 
 #### Subscribe to updates
+
 ```js
 const sql = postgres({ publications: 'alltables' })
 
@@ -1017,7 +1052,6 @@ const sql =
 ```
 
 For more information regarding `ssl` with `postgres`, check out the [Node.js documentation for tls](https://nodejs.org/dist/latest-v16.x/docs/api/tls.html#new-tlstlssocketsocket-options).
-
 
 ### Multi-host connections - High Availability (HA)
 
@@ -1245,56 +1279,67 @@ Query errors will also contain the `query` string and the `parameters`. These ar
 There are also the following errors specifically for this library.
 
 ##### UNSAFE_TRANSACTION
+>
 > Only use sql.begin or max: 1
 
 To ensure statements in a transaction runs on the same connection (which is required for them to run inside the transaction), you must use [`sql.begin(...)`](#transactions) or only allow a single connection in options (`max: 1`).
 
 ##### UNDEFINED_VALUE
+>
 > Undefined values are not allowed
 
 Postgres.js won't accept `undefined` as values in tagged template queries since it becomes ambiguous what to do with the value. If you want to set something to null, use `null` explicitly.
 
 ##### MESSAGE_NOT_SUPPORTED
+>
 > X (X) is not supported
 
 Whenever a message is received from Postgres which is not supported by this library. Feel free to file an issue if you think something is missing.
 
 ##### MAX_PARAMETERS_EXCEEDED
+>
 > Max number of parameters (65534) exceeded
 
 The postgres protocol doesn't allow more than 65534 (16bit) parameters. If you run into this issue there are various workarounds such as using `sql([...])` to escape values instead of passing them as parameters.
 
 ##### SASL_SIGNATURE_MISMATCH
+>
 > Message type X not supported
 
 When using SASL authentication the server responds with a signature at the end of the authentication flow which needs to match the one on the client. This is to avoid [man-in-the-middle attacks](https://en.wikipedia.org/wiki/Man-in-the-middle_attack). If you receive this error the connection was canceled because the server did not reply with the expected signature.
 
 ##### NOT_TAGGED_CALL
+>
 > Query not called as a tagged template literal
 
 Making queries has to be done using the sql function as a [tagged template](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Tagged_templates). This is to ensure parameters are serialized and passed to Postgres as query parameters with correct types and to avoid SQL injection.
 
 ##### AUTH_TYPE_NOT_IMPLEMENTED
+>
 > Auth type X not implemented
 
 Postgres supports many different authentication types. This one is not supported.
 
 ##### CONNECTION_CLOSED
+>
 > write CONNECTION_CLOSED host:port
 
 This error is thrown if the connection was closed without an error. This should not happen during normal operations, so please create an issue if this was unexpected.
 
 ##### CONNECTION_ENDED
+>
 > write CONNECTION_ENDED host:port
 
 This error is thrown if the user has called [`sql.end()`](#teardown--cleanup) and performed a query afterward.
 
 ##### CONNECTION_DESTROYED
+>
 > write CONNECTION_DESTROYED host:port
 
 This error is thrown for any queries that were pending when the timeout to [`sql.end({ timeout: X })`](#teardown--cleanup) was reached.
 
 ##### CONNECTION_CONNECT_TIMEOUT
+>
 > write CONNECTION_CONNECT_TIMEOUT host:port
 
 This error is thrown if the startup phase of the connection (tcp, protocol negotiation, and auth) took more than the default 30 seconds or what was specified using `connect_timeout` or `PGCONNECT_TIMEOUT`.
@@ -1302,6 +1347,7 @@ This error is thrown if the startup phase of the connection (tcp, protocol negot
 ## TypeScript support
 
 `postgres` has TypeScript support. You can pass a row list type for your queries in this way:
+
 ```ts
 interface User {
   id: number
@@ -1315,6 +1361,7 @@ users[0].invalid // fails: `invalid` does not exists on `User`
 ```
 
 However, be sure to check the array length to avoid accessing properties of `undefined` rows:
+
 ```ts
 const users = await sql<User[]>`SELECT * FROM users WHERE id = ${id}`
 if (!users.length)
@@ -1324,6 +1371,7 @@ return users[0]
 
 You can also prefer destructuring when you only care about a fixed number of rows.
 In this case, we recommend you to prefer using tuples to handle `undefined` properly:
+
 ```ts
 const [user]: [User?] = await sql`SELECT * FROM users WHERE id = ${id}`
 if (!user) // => User | undefined
@@ -1341,9 +1389,9 @@ We do our best to type all the public API, however types are not always updated 
 
 Postgres.js doesn't come with any migration solution since it's way out of scope, but here are some modules that support Postgres.js for migrations:
 
-- https://github.com/porsager/postgres-shift
-- https://github.com/lukeed/ley
-- https://github.com/JAForbes/pgmg
+- <https://github.com/porsager/postgres-shift>
+- <https://github.com/lukeed/ley>
+- <https://github.com/JAForbes/pgmg>
 
 ## Thank you
 

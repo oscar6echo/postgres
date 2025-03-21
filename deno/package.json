@@ -1,1 +1,6 @@
-{"type":"commonjs"}
+{
+  "type":"commonjs",
+  "dependencies": {
+    "@types/node": "^22.13.11"
+  }
+}

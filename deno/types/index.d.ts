@@ -1,6 +1,5 @@
-import { Buffer } from 'https://deno.land/std@0.132.0/node/buffer.ts'
-import process from 'https://deno.land/std@0.132.0/node/process.ts'
-import { Readable, Writable } from 'https://deno.land/std@0.132.0/node/stream.ts'
+import { Buffer } from 'node:buffer';
+import { Readable, Writable } from 'node:stream';
 
 /**
  * Establish a connection to a PostgreSQL server.
@@ -728,4 +727,4 @@ declare namespace postgres {
   }
 }
 
-export = postgres;
+export default postgres;
