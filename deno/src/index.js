@@ -1,6 +1,6 @@
-import fs from "node:fs";
-import os from 'node:os';
-import process from 'node:process';
+import fs from 'node:fs'
+import os from 'node:os'
+import process from 'node:process'
 
 import {
     Builder,
@@ -17,14 +17,14 @@ import {
     toCamel,
     toKebab,
     toPascal
-} from './types.js';
+} from './types.js'
 
-import Connection from './connection.js';
-import { Errors, PostgresError } from './errors.js';
-import largeObject from './large.js';
-import { CLOSE, Query } from './query.js';
-import Queue from './queue.js';
-import Subscribe from './subscribe.js';
+import Connection from './connection.js'
+import { Errors, PostgresError } from './errors.js'
+import largeObject from './large.js'
+import { CLOSE, Query } from './query.js'
+import Queue from './queue.js'
+import Subscribe from './subscribe.js'
 
 Object.assign(Postgres, {
   PostgresError,

@@ -1,6 +1,6 @@
 {
   "name": "@oscar6echo/postgres", // original = "@y0/postgres"
-  "version": "3.4.5-c",
+  "version": "3.4.5-d",
   "exports": "./mod.js", // not "./src/index.js"
   "license": "MulanPSL-2.0",
   "imports": {

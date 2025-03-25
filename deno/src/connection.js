@@ -1,16 +1,15 @@
-import { HmacSha256 } from "jsr:@std/crypto@1";
-import { Buffer } from 'node:buffer';
-import crypto from 'node:crypto';
-import Stream from 'node:stream';
-import { clearImmediate, net, setImmediate, tls } from '../polyfills.js';
+import { Buffer } from 'node:buffer'
+import crypto from 'node:crypto'
+import Stream from 'node:stream'
+import { clearImmediate, net, setImmediate, tls } from '../polyfills.js'
 
 
-import b from './bytes.js';
-import { Errors } from './errors.js';
-import { CLOSE, Query } from './query.js';
-import Queue from './queue.js';
-import Result from './result.js';
-import { arrayParser, arraySerializer, handleValue, stringify } from './types.js';
+import b from './bytes.js'
+import { Errors } from './errors.js'
+import { CLOSE, Query } from './query.js'
+import Queue from './queue.js'
+import Result from './result.js'
+import { arrayParser, arraySerializer, handleValue, stringify } from './types.js'
 
 export default Connection
 
@@ -998,8 +997,30 @@ function md5(x) {
   return crypto.createHash('md5').update(x).digest('hex')
 }
 
-function hmac(key, x) {
-  return Buffer.from(new HmacSha256(key).update(x).digest())
+const UTF8 = new TextEncoder();
+
+const hmac = async (key, x) => {
+  if (key.constructor == String) {
+    key = UTF8.encode(key);
+  }
+  
+  if (x.constructor == String) {
+    x = UTF8.encode(x);
+  }
+
+  const cryptoKey = await crypto.subtle.importKey(
+    "raw",
+    key,
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+
+  return Buffer.from(await crypto.subtle.sign(
+    "HMAC",
+    cryptoKey,
+    x
+  ));
 }
 
 function sha256(x) {
